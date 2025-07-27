@@ -1,0 +1,23 @@
+ private List<List<Integer>> Breadth_First_Search (TreeNode root){
+        List<List<Integer>> ans = new LinkedList<List<Integer>>();
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        if(root == null){
+            return ans;
+        }
+        queue.add(root);
+        while(!queue.isEmpty()){
+            int level = queue.size();
+            List<Integer> sublist = new LinkedList<Integer>();
+            for(int i = 0 ;i<level;i++){
+                if(queue.peek().left != null) {
+                    queue.add(queue.peek().left);
+                }
+                if(queue.peek().right != null) {
+                    queue.add(queue.peek().right);
+                }
+                sublist.add(queue.poll().val);
+            }
+            ans.add(sublist);
+        }
+        return ans;
+    }
