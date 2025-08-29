@@ -35,3 +35,47 @@ public int MaxPoint(int days, int lastTask, int[][] task) {
     return maxi;
 }
 
+// Dp :- Solutions
+
+import java.util.*;
+
+public class Solution {
+
+    public static int ninjaTraining(int n, int[][] points) {
+        
+        int[][] dp = new int[n][4];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+        return maxPoint(n - 1, 3, points, dp);
+    }
+
+    private static int maxPoint(int day, int lastTask, int[][] points, int[][] dp) {
+        
+        if (dp[day][lastTask] != -1) return dp[day][lastTask];
+
+        
+        if (day == 0) {
+            int best = 0;
+            for (int task = 0; task < 3; task++) {
+                if (task != lastTask) {
+                    best = Math.max(best, points[0][task]);
+                }
+            }
+            return dp[day][lastTask] = best;
+        }
+
+        
+        int best = 0;
+        for (int task = 0; task < 3; task++) {
+            if (task != lastTask) {
+                int score = points[day][task] + maxPoint(day - 1, task, points, dp);
+                best = Math.max(best, score);
+            }
+        }
+
+        return dp[day][lastTask] = best;
+    }
+}
+
+
